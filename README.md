@@ -238,31 +238,3 @@ SafeBrowsing-Extension/
 * ✅ Google Chrome (Manifest V3)
 * ✅ Microsoft Edge (Manifest V3)
 * ✅ Brave Browser (Manifest V3)
-* ❌ Firefox (requires Manifest V2 modifications)
-* ❌ Safari (different extension system)
-
-## Important Notes
-
-1. **Change Default PIN:** Always change the default PIN (1234) immediately after installation
-2. **Regular Monitoring:** Check activity logs regularly to stay informed
-3. **Communication:** Talk with your children about online safety
-4. **Not Foolproof:** This is a tool to assist, not replace active parenting
-5. **VPN/Proxy:** Children using VPNs or proxies may bypass some restrictions
-6. **Incognito Mode:** Extension may not work in incognito/private browsing unless enabled
-
-## Tips for Parents
-
-* Start with conservative settings and adjust based on age
-* Have open conversations about why certain sites are blocked
-* Review activity logs together with your child
-* Set reasonable time limits that allow homework and research
-* Whitelist educational websites if they get blocked
-* Update blocked sites list regularly
-
-## Tips for Effectiveness
-
-* Install on all browsers your child uses
-* Set browser as default to prevent other browser usage
-* Consider device-level parental controls as backup
-* Monitor for new browsers being installed
-* Educate about online safety, not just restrict
