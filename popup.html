@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Safe Browsing Control</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>🛡️ Safe Browsing</h1>
+      <p class="subtitle">Parental Control Extension</p>
+    </div>
+
+    <div id="childView" class="view">
+      <div class="status-card">
+        <div class="status-indicator">
+          <span class="status-dot active"></span>
+          <span class="status-text">Protection Active</span>
+        </div>
+      </div>
+
+      <div class="info-section">
+        <h3>📊 Today's Activity</h3>
+        <div class="stat-grid">
+          <div class="stat-item">
+            <span class="stat-value" id="sitesVisited">0</span>
+            <span class="stat-label">Sites Visited</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-value" id="sitesBlocked">0</span>
+            <span class="stat-label">Sites Blocked</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-value" id="timeSpent">0h 0m</span>
+            <span class="stat-label">Time Online</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="message-section">
+        <p class="message">🌟 Browse safely! Your parents are keeping you protected.</p>
+      </div>
+
+      <button class="btn btn-secondary" id="parentAccessBtn">Parent Access</button>
+    </div>
+
+    <div id="parentView" class="view hidden">
+      <div class="auth-section">
+        <h3>🔐 Parent Authentication</h3>
+        <input type="password" id="parentPassword" placeholder="Enter parent PIN" class="input-field">
+        <button class="btn btn-primary" id="unlockBtn">Unlock Dashboard</button>
+        <button class="btn btn-secondary" id="backToChildBtn">Back</button>
+      </div>
+    </div>
+
+    <div id="parentDashboard" class="view hidden">
+      <div class="dashboard-header">
+        <h3>Parent Control Panel</h3>
+        <button class="btn btn-small" id="logoutBtn">Logout</button>
+      </div>
+
+      <div class="quick-actions">
+        <button class="action-btn" id="openFullDashboard">
+          📊 Full Dashboard
+        </button>
+        <button class="action-btn" id="quickBlockBtn">
+          🚫 Quick Block
+        </button>
+      </div>
+
+      <div class="summary">
+        <h4>Quick Summary</h4>
+        <p>Total Blocked Sites: <strong id="totalBlocked">0</strong></p>
+        <p>Active Time Limits: <strong id="activeTimeLimits">None</strong></p>
+      </div>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

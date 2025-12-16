@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parent Dashboard - Safe Browsing</title>
+  <link rel="stylesheet" href="parent-dashboard.css">
+</head>
+<body>
+  <div class="dashboard">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="logo">
+        <h2>🛡️ Safe Browsing</h2>
+        <p>Parent Control</p>
+      </div>
+      
+      <nav class="nav-menu">
+        <button class="nav-item active" data-section="overview">
+          <span class="icon">📊</span>
+          <span>Overview</span>
+        </button>
+        <button class="nav-item" data-section="blocked-sites">
+          <span class="icon">🚫</span>
+          <span>Blocked Sites</span>
+        </button>
+        <button class="nav-item" data-section="time-limits">
+          <span class="icon">⏰</span>
+          <span>Time Limits</span>
+        </button>
+        <button class="nav-item" data-section="activity-log">
+          <span class="icon">📝</span>
+          <span>Activity Log</span>
+        </button>
+        <button class="nav-item" data-section="settings">
+          <span class="icon">⚙️</span>
+          <span>Settings</span>
+        </button>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <header class="top-bar">
+        <h1 id="pageTitle">Overview</h1>
+        <div class="user-info">
+          <span class="date" id="currentDate"></span>
+        </div>
+      </header>
+
+      <!-- Overview Section -->
+      <section id="overview" class="content-section">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon">🌐</div>
+            <div class="stat-info">
+              <h3 id="totalSitesVisited">0</h3>
+              <p>Sites Visited Today</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">🚫</div>
+            <div class="stat-info">
+              <h3 id="totalSitesBlocked">0</h3>
+              <p>Sites Blocked Today</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">⏱️</div>
+            <div class="stat-info">
+              <h3 id="totalTimeSpent">0h 0m</h3>
+              <p>Total Time Online</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">⚠️</div>
+            <div class="stat-info">
+              <h3 id="totalWarnings">0</h3>
+              <p>Safety Warnings</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="charts-grid">
+          <div class="chart-card">
+            <h3>Recent Activity</h3>
+            <div id="recentActivity" class="activity-list">
+              <p class="no-data">No activity recorded yet</p>
+            </div>
+          </div>
+          
+          <div class="chart-card">
+            <h3>Top Visited Sites</h3>
+            <div id="topSites" class="sites-list">
+              <p class="no-data">No sites visited yet</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Blocked Sites Section -->
+      <section id="blocked-sites" class="content-section hidden">
+        <div class="section-header">
+          <h2>Manage Blocked Sites</h2>
+          <button class="btn btn-primary" id="addBlockBtn">+ Add Site</button>
+        </div>
+
+        <div class="search-bar">
+          <input type="text" id="searchBlocked" placeholder="Search blocked sites..." class="search-input">
+        </div>
+
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Domain</th>
+                <th>Category</th>
+                <th>Blocked Since</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="blockedSitesTable">
+              <tr>
+                <td colspan="4" class="no-data">No blocked sites yet</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Time Limits Section -->
+      <section id="time-limits" class="content-section hidden">
+        <div class="section-header">
+          <h2>Screen Time Management</h2>
+          <button class="btn btn-primary" id="addTimeLimitBtn">+ Add Time Limit</button>
+        </div>
+
+        <div class="time-limit-cards" id="timeLimitCards">
+          <div class="empty-state">
+            <p>⏰ No time limits set</p>
+            <p class="sub-text">Add daily or per-site time limits to manage screen time</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Activity Log Section -->
+      <section id="activity-log" class="content-section hidden">
+        <div class="section-header">
+          <h2>Browsing Activity Log</h2>
+          <div class="filter-controls">
+            <select id="dateFilter" class="filter-select">
+              <option value="today">Today</option>
+              <option value="week">This Week</option>
+              <option value="month">This Month</option>
+              <option value="all">All Time</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="timeline" id="activityTimeline">
+          <p class="no-data">No activity recorded</p>
+        </div>
+      </section>
+
+      <!-- Settings Section -->
+      <section id="settings" class="content-section hidden">
+        <div class="settings-container">
+          <div class="settings-card">
+            <h3>🔐 Security Settings</h3>
+            <div class="setting-item">
+              <label for="currentPIN">Current PIN</label>
+              <input type="password" id="currentPIN" placeholder="Enter current PIN" class="input-field">
+            </div>
+            <div class="setting-item">
+              <label for="newPIN">New PIN</label>
+              <input type="password" id="newPIN" placeholder="Enter new PIN (4 digits)" class="input-field" maxlength="4">
+            </div>
+            <div class="setting-item">
+              <label for="confirmPIN">Confirm New PIN</label>
+              <input type="password" id="confirmPIN" placeholder="Confirm new PIN" class="input-field" maxlength="4">
+            </div>
+            <button class="btn btn-primary" id="changePINBtn">Update PIN</button>
+          </div>
+
+          <div class="settings-card">
+            <h3>📧 Notifications</h3>
+            <div class="setting-item">
+              <label class="toggle-label">
+                <input type="checkbox" id="notifyBlocked" checked>
+                <span>Notify when sites are blocked</span>
+              </label>
+            </div>
+            <div class="setting-item">
+              <label class="toggle-label">
+                <input type="checkbox" id="notifyTimeLimit" checked>
+                <span>Notify when time limits are reached</span>
+              </label>
+            </div>
+            <div class="setting-item">
+              <label class="toggle-label">
+                <input type="checkbox" id="dailyReport" checked>
+                <span>Send daily activity reports</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="settings-card">
+            <h3>🎯 Filter Categories</h3>
+            <div class="setting-item">
+              <label class="toggle-label">
+                <input type="checkbox" id="blockAdult" checked>
+                <span>Adult Content</span>
+              </label>
+            </div>
+            <div class="setting-item">
+              <label class="toggle-label">
+                <input type="checkbox" id="blockGambling" checked>
+                <span>Gambling</span>
+              </label>
+            </div>
+            <div class="setting-item">
+              <label class="toggle-label">
+                <input type="checkbox" id="blockSocial">
+                <span>Social Media</span>
+              </label>
+            </div>
+            <div class="setting-item">
+              <label class="toggle-label">
+                <input type="checkbox" id="blockGaming">
+                <span>Gaming Sites</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="settings-card">
+            <h3>💾 Data Management</h3>
+            <button class="btn btn-secondary" id="exportDataBtn">Export Activity Data</button>
+            <button class="btn btn-danger" id="clearDataBtn">Clear All Data</button>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Modal for Adding Blocked Site -->
+  <div id="addBlockModal" class="modal hidden">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Add Blocked Site</h3>
+        <button class="close-btn" id="closeBlockModal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="blockDomain">Domain or URL</label>
+          <input type="text" id="blockDomain" placeholder="example.com" class="input-field">
+        </div>
+        <div class="form-group">
+          <label for="blockCategory">Category</label>
+          <select id="blockCategory" class="input-field">
+            <option value="adult">Adult Content</option>
+            <option value="gambling">Gambling</option>
+            <option value="social">Social Media</option>
+            <option value="gaming">Gaming</option>
+            <option value="custom">Custom</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="cancelBlockBtn">Cancel</button>
+        <button class="btn btn-primary" id="confirmBlockBtn">Add Block</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for Adding Time Limit -->
+  <div id="addTimeLimitModal" class="modal hidden">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Add Time Limit</h3>
+        <button class="close-btn" id="closeTimeLimitModal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="timeLimitType">Limit Type</label>
+          <select id="timeLimitType" class="input-field">
+            <option value="daily">Daily Limit</option>
+            <option value="perSite">Per Site Limit</option>
+          </select>
+        </div>
+        <div class="form-group" id="siteInputGroup" style="display: none;">
+          <label for="timeLimitSite">Website</label>
+          <input type="text" id="timeLimitSite" placeholder="example.com" class="input-field">
+        </div>
+        <div class="form-group">
+          <label for="timeLimitHours">Hours</label>
+          <input type="number" id="timeLimitHours" min="0" max="23" value="1" class="input-field">
+        </div>
+        <div class="form-group">
+          <label for="timeLimitMinutes">Minutes</label>
+          <input type="number" id="timeLimitMinutes" min="0" max="59" value="0" class="input-field">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="cancelTimeLimitBtn">Cancel</button>
+        <button class="btn btn-primary" id="confirmTimeLimitBtn">Add Limit</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="parent-dashboard.js"></script>
+</body>
+</html>

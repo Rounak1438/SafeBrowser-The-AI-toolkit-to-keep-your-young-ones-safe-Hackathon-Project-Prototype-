@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Site Blocked - Safe Browsing</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .blocked-container {
+      background: white;
+      border-radius: 20px;
+      padding: 50px 40px;
+      max-width: 600px;
+      text-align: center;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+      animation: slideUp 0.5s ease;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .icon-shield {
+      font-size: 100px;
+      margin-bottom: 20px;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.1);
+      }
+    }
+
+    h1 {
+      font-size: 32px;
+      color: #333;
+      margin-bottom: 15px;
+    }
+
+    .subtitle {
+      font-size: 18px;
+      color: #666;
+      margin-bottom: 30px;
+    }
+
+    .blocked-info {
+      background: #f8f9fa;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 30px;
+      text-align: left;
+    }
+
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid #e9ecef;
+    }
+
+    .info-row:last-child {
+      border-bottom: none;
+    }
+
+    .info-label {
+      font-weight: 600;
+      color: #333;
+      font-size: 14px;
+    }
+
+    .info-value {
+      color: #666;
+      font-size: 14px;
+      word-break: break-all;
+      max-width: 70%;
+      text-align: right;
+    }
+
+    .reason-badge {
+      background: #dc3545;
+      color: white;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .message-box {
+      background: #fff3cd;
+      border-left: 4px solid #ffc107;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 30px;
+      text-align: left;
+    }
+
+    .message-box p {
+      font-size: 14px;
+      color: #856404;
+      line-height: 1.6;
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 12px 30px;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    }
+
+    .btn-secondary {
+      background: #6c757d;
+      color: white;
+    }
+
+    .btn-secondary:hover {
+      background: #5a6268;
+    }
+
+    .footer-text {
+      margin-top: 30px;
+      font-size: 12px;
+      color: #999;
+    }
+
+    .time-info {
+      margin-top: 20px;
+      font-size: 13px;
+      color: #666;
+    }
+
+    .stats-mini {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .stat-mini {
+      background: white;
+      padding: 15px;
+      border-radius: 8px;
+      border: 2px solid #f0f0f0;
+    }
+
+    .stat-mini-value {
+      font-size: 24px;
+      font-weight: bold;
+      color: #667eea;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .stat-mini-label {
+      font-size: 11px;
+      color: #666;
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+<body>
+  <div class="blocked-container">
+    <div class="icon-shield">🛡️</div>
+    <h1>Website Blocked</h1>
+    <p class="subtitle">This site has been blocked for your safety</p>
+
+    <div class="blocked-info">
+      <div class="info-row">
+        <span class="info-label">URL:</span>
+        <span class="info-value" id="blockedUrl">Loading...</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Reason:</span>
+        <span class="reason-badge" id="blockReason">Loading...</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Time:</span>
+        <span class="info-value" id="blockTime">Loading...</span>
+      </div>
+    </div>
+
+    <div class="message-box">
+      <p>
+        <strong>🌟 Hey there!</strong><br>
+        This website has been blocked by your parents to keep you safe online. 
+        If you think this was a mistake, you can ask your parents to review it.
+      </p>
+    </div>
+
+    <div class="stats-mini">
+      <div class="stat-mini">
+        <span class="stat-mini-value" id="sitesBlocked">0</span>
+        <span class="stat-mini-label">Sites Blocked Today</span>
+      </div>
+      <div class="stat-mini">
+        <span class="stat-mini-value" id="sitesVisited">0</span>
+        <span class="stat-mini-label">Sites Visited</span>
+      </div>
+      <div class="stat-mini">
+        <span class="stat-mini-value" id="timeOnline">0h 0m</span>
+        <span class="stat-mini-label">Time Online</span>
+      </div>
+    </div>
+
+    <div class="action-buttons">
+      <button class="btn btn-primary" onclick="goHome()">Go to Safe Home</button>
+      <button class="btn btn-secondary" onclick="goBack()">Go Back</button>
+    </div>
+
+    <p class="footer-text">
+      Protected by Safe Browsing Parental Control Extension
+    </p>
+  </div>
+
+  <script>
+    // Get URL parameters
+    const params = new URLSearchParams(window.location.search);
+    const blockedUrl = params.get('url') || 'Unknown';
+    const reason = params.get('reason') || 'Parental control rule';
+
+    // Display blocked information
+    document.getElementById('blockedUrl').textContent = decodeURIComponent(blockedUrl);
+    document.getElementById('blockReason').textContent = reason;
+    document.getElementById('blockTime').textContent = new Date().toLocaleTimeString();
+
+    // Load statistics
+    chrome.storage.local.get(['dailyStats'], (result) => {
+      const stats = result.dailyStats || {
+        sitesBlocked: 0,
+        sitesVisited: 0,
+        timeSpent: 0
+      };
+
+      document.getElementById('sitesBlocked').textContent = stats.sitesBlocked || 0;
+      document.getElementById('sitesVisited').textContent = stats.sitesVisited || 0;
+      
+      const hours = Math.floor(stats.timeSpent / 60);
+      const minutes = stats.timeSpent % 60;
+      document.getElementById('timeOnline').textContent = `${hours}h ${minutes}m`;
+    });
+
+    // Navigation functions
+    function goHome() {
+      window.location.href = 'https://www.google.com';
+    }
+
+    function goBack() {
+      window.history.back();
+    }
+
+    // Prevent navigation to blocked URL
+    window.addEventListener('popstate', (event) => {
+      event.preventDefault();
+      goHome();
+    });
+  </script>
+</body>
+</html>

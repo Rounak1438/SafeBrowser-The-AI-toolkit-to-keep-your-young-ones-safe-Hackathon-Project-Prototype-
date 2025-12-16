@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Extension Icons</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 20px;
+    }
+    .container {
+      background: white;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+      max-width: 600px;
+      text-align: center;
+    }
+    h1 {
+      color: #333;
+      margin-bottom: 20px;
+    }
+    .icon-preview {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin: 30px 0;
+    }
+    .icon-item {
+      text-align: center;
+    }
+    canvas {
+      border: 2px solid #e9ecef;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+    button {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      margin: 10px;
+      transition: transform 0.3s ease;
+    }
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    }
+    .instructions {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 12px;
+      margin-top: 20px;
+      text-align: left;
+    }
+    .instructions ol {
+      margin-left: 20px;
+    }
+    .instructions li {
+      margin-bottom: 10px;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🛡️ Create Extension Icons</h1>
+    <p>Click the button below to generate and download all required icon sizes</p>
+
+    <div class="icon-preview">
+      <div class="icon-item">
+        <canvas id="icon16" width="16" height="16"></canvas>
+        <div>16x16</div>
+      </div>
+      <div class="icon-item">
+        <canvas id="icon48" width="48" height="48"></canvas>
+        <div>48x48</div>
+      </div>
+      <div class="icon-item">
+        <canvas id="icon128" width="128" height="128"></canvas>
+        <div>128x128</div>
+      </div>
+    </div>
+
+    <button onclick="generateIcons()">Generate Icons</button>
+    <button onclick="downloadAll()">Download All Icons</button>
+
+    <div class="instructions">
+      <h3>Instructions:</h3>
+      <ol>
+        <li>Click "Generate Icons" to create the shield icons</li>
+        <li>Click "Download All Icons" to save them to your computer</li>
+        <li>Create a folder named "icons" in your SafeBrowsing-Extension folder</li>
+        <li>Move the three downloaded PNG files into the icons folder</li>
+        <li>Load the extension in your browser</li>
+      </ol>
+    </div>
+  </div>
+
+  <script>
+    function drawShieldIcon(canvas, size) {
+      const ctx = canvas.getContext('2d');
+      
+      // Clear canvas
+      ctx.clearRect(0, 0, size, size);
+      
+      // Background gradient
+      const gradient = ctx.createLinearGradient(0, 0, size, size);
+      gradient.addColorStop(0, '#667eea');
+      gradient.addColorStop(1, '#764ba2');
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, size, size);
+      
+      // Draw shield shape
+      ctx.fillStyle = 'white';
+      ctx.beginPath();
+      
+      const centerX = size / 2;
+      const topY = size * 0.2;
+      const bottomY = size * 0.85;
+      const width = size * 0.6;
+      
+      // Top of shield
+      ctx.moveTo(centerX - width / 2, topY);
+      ctx.lineTo(centerX + width / 2, topY);
+      
+      // Right side
+      ctx.lineTo(centerX + width / 2, topY + width * 0.5);
+      
+      // Bottom point
+      ctx.lineTo(centerX, bottomY);
+      
+      // Left side
+      ctx.lineTo(centerX - width / 2, topY + width * 0.5);
+      
+      ctx.closePath();
+      ctx.fill();
+      
+      // Draw checkmark or lock symbol
+      if (size >= 48) {
+        ctx.strokeStyle = '#667eea';
+        ctx.lineWidth = size / 16;
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+        
+        ctx.beginPath();
+        ctx.moveTo(centerX - size * 0.15, centerX);
+        ctx.lineTo(centerX - size * 0.05, centerX + size * 0.1);
+        ctx.lineTo(centerX + size * 0.2, centerX - size * 0.1);
+        ctx.stroke();
+      }
+    }
+
+    function generateIcons() {
+      drawShieldIcon(document.getElementById('icon16'), 16);
+      drawShieldIcon(document.getElementById('icon48'), 48);
+      drawShieldIcon(document.getElementById('icon128'), 128);
+    }
+
+    function downloadCanvas(canvasId, filename) {
+      const canvas = document.getElementById(canvasId);
+      const link = document.createElement('a');
+      link.download = filename;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    }
+
+    function downloadAll() {
+      // Generate first if not already done
+      generateIcons();
+      
+      // Small delay between downloads
+      setTimeout(() => downloadCanvas('icon16', 'icon16.png'), 100);
+      setTimeout(() => downloadCanvas('icon48', 'icon48.png'), 300);
+      setTimeout(() => downloadCanvas('icon128', 'icon128.png'), 500);
+      
+      alert('Icons downloaded! Check your downloads folder.\n\nNext steps:\n1. Create "icons" folder in SafeBrowsing-Extension\n2. Move the 3 PNG files into the icons folder\n3. Load the extension in your browser');
+    }
+
+    // Generate on page load
+    window.onload = generateIcons;
+  </script>
+</body>
+</html>
